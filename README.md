@@ -17,8 +17,13 @@ To eval:
 python eval.py
 
 The train data: X X X </d> X X X </d> X X X </d> ...
+
 The answer data: Y Y Y </d>
+
 The vocab data:  word freq
-           i.e.   Apple   53
-                  Banana  23
-                  ...
+
+          i.e.   Apple   53
+         
+                 Banana  23
+                 
+                 ...
