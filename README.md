@@ -16,7 +16,7 @@ python train.py
 To eval:
 python eval.py
 
-The train data: X X X </d> X X X </d> X X X </d> ...
+The train data: X X X \</d\> X X X </d> X X X </d> ...
 
 The answer data: Y Y Y </d>
 
