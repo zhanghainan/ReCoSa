@@ -1,5 +1,5 @@
 # ReCoSa
-ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation\\
+ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation\n
 
 
 Requirement: 
