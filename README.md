@@ -1,5 +1,5 @@
 # ReCoSa
-ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation
+ReCoSa: Detecting the Relevant Contexts with Self-Attention for Multi-turn Dialogue Generation\\
 
 
 Requirement: 
@@ -10,23 +10,23 @@ numpy>=1.13.0
 
 regex>=2017.6.7
 
-tensorflow>=1.2.0
+tensorflow>=1.2.0\\
 
 
 parameter setting:
-hyperparams.py
+hyperparams.py\\
 
 
 To generate vocab:
-python prepro.py
+python prepro.py\\
 
 
 To train:
-python train.py
+python train.py\\
 
 
 To eval:
-python eval.py
+python eval.py\\
 
 
 The dialogue data：Hello How are you?      Good, you?      I'm fine, what's new?
