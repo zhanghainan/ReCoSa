@@ -195,42 +195,17 @@ if __name__ == '__main__':
             for step in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                 _,loss_step,attns,sources,targets = sess.run([g.train_op,g.mean_loss,g.attn,g.source,g.target])
                 loss.append(loss_step)
-                attns = np.reshape(attns,[hp.num_heads,hp.batch_size,hp.maxlen,hp.max_turn])
-                attns = np.transpose(attns,[1,2,0,3])
-                '''
-                for source, target, attn in zip(sources, targets, attns): # sentence-wise
-                    sour = source.split("</d>")
-                    sour = sour[:-1]
-                    idx=0
-                    for ss in sour:
-                        idx+=1
-                        print(str(idx) + ss)
-                    print("target: "+target)
-                    idx=0
-                    for g in target.split():
-                        print(g)
-                        for h in range(hp.num_heads):
-                            att = attn[idx][h][:len(sour)]
-                            att_sum = np.sum(att)
-                            att = att/att_sum
-                            print(" ".join(str(w) for w in att))
-                        idx+=1
-                '''
+                
                 if step%2000==0:
                     gs = sess.run(g.global_step)
                     print("train loss:%.5lf\n"%(np.mean(loss)))
                     sv.saver.save(sess, hp.logdir + '/model_epoch_%02d_gs_%d' % (epoch, gs))
 
                     mname = open(hp.logdir + '/checkpoint', 'r').read().split('"')[1]
-                    fout = codecs.open("results/" + mname, "w","utf-8")
+                    fout = codecs.open( mname, "w","utf-8")
                     eval_loss=[]
                     bleu=[]
-                    attnFile1=open("attention1.txt","w")
-                    attnFile2=open("attention2.txt","w")
-                    attnFile3=open("attention3.txt","w")
-                    attnFile4=open("attention4.txt","w")
-                    attnFile5=open("attention5.txt","w")
-                    attnFile6=open("attention6.txt","w")
+                  
                     for i in range(len(X) // hp.batch_size):
                        ### Get mini-batches
                        x = X[i*hp.batch_size: (i+1)*hp.batch_size]
@@ -246,62 +221,8 @@ if __name__ == '__main__':
                            _preds = sess.run(g.preds, {g.x: x,g.x_length:x_length, g.y: preds})
                            preds[:, j] = _preds[:, j]
 
-                       attns = sess.run(g.attn,{g.x: x,g.x_length:x_length,g.y:y})
-                       attns = np.reshape(attns,[hp.num_heads,hp.batch_size,hp.maxlen,hp.max_turn])
-                       attns = np.transpose(attns,[1,2,0,3])
-                       for source, target, attn in zip(sources, targets, attns): # sentence-wise
-                           sour = source.split("</d>")
-                           sour = sour[:-1]
-                           idx=0
-                           for ss in sour:
-                               idx+=1
-                               #print(ss)
-                               attnFile1.write("%d\t%s\n"%(idx,ss))
-                               attnFile2.write("%d\t%s\n"%(idx,ss))
-                               attnFile3.write("%d\t%s\n"%(idx,ss))
-                               attnFile4.write("%d\t%s\n"%(idx,ss))
-                               attnFile5.write("%d\t%s\n"%(idx,ss))
-                               attnFile6.write("%d\t%s\n"%(idx,ss))
-                               #print(str(idx)+"\t"+ss)
-                           #print("target: "+target)
-                           target=target.split("</d>")[0]
-                           attnFile1.write("target: %s\n"%(target))
-                           attnFile2.write("target: %s\n"%(target))
-                           attnFile3.write("target: %s\n"%(target))
-                           attnFile4.write("target: %s\n"%(target))
-                           attnFile5.write("target: %s\n"%(target))
-                           attnFile6.write("target: %s\n"%(target))
-                           idx=0
-                           for gg in target.split():
-                               attnFile1.write("%s\n"%(gg))#print(g)
-                               attnFile2.write("%s\n"%(gg))
-                               attnFile3.write("%s\n"%(gg))
-                               attnFile4.write("%s\n"%(gg))
-                               attnFile5.write("%s\n"%(gg))
-                               attnFile6.write("%s\n"%(gg))
-                               for h in range(hp.num_heads):
-                                   att = attn[idx][h][:len(sour)]
-                                   att_sum = np.sum(att)
-                                   att = att/att_sum
-                                   if h ==0:
-                                       attnFile1.write("%s\n"%(" ".join(str(w) for w in att)))
-                                   if h ==1:
-                                       attnFile2.write("%s\n"%(" ".join(str(w) for w in att)))
-                                   if h ==2:
-                                       attnFile3.write("%s\n"%(" ".join(str(w) for w in att)))
-                                   if h ==3:
-                                       attnFile4.write("%s\n"%(" ".join(str(w) for w in att)))
-                                   if h ==4:
-                                       attnFile5.write("%s\n"%(" ".join(str(w) for w in att)))
-                                   if h ==5:
-                                       attnFile6.write("%s\n"%(" ".join(str(w) for w in att)))
-                               idx+=1
-                           attnFile1.write("\n")#print("")
-                           attnFile2.write("\n")
-                           attnFile3.write("\n")
-                           attnFile4.write("\n")
-                           attnFile5.write("\n")
-                           attnFile6.write("\n")
+                    
+                    
                        ### Write to file
                        list_of_refs, hypotheses = [], []
                        for source, target, pred in zip(sources, targets, preds): # sentence-wise
