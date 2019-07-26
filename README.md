@@ -10,20 +10,30 @@ tensorflow>=1.2.0
 parameter setting:
 hyperparams.py
 
+To generate vocab:
+python prepro.py
+
 To train:
 python train.py
 
 To eval:
 python eval.py
 
-The train data: X X X \</d\> X X X \</d\> X X X \</d\> ...
+The dialogue data：Hello How are you?  Good, you? I'm fine, what's new?
 
-The answer data: Y Y Y \</d\>
+Souce looks like:
 
-The vocab data:  word freq
+Hello How are you?  </d>
 
-          i.e.   Apple   53
-         
-                 Banana  23
-                 
-                 ...
+Hello How are you?  </d> Good, you? </d>
+
+Hello How are you? </d> Good, you? </d> I'm fine, what's new?</d>
+
+Target:
+
+Good, you?</d>
+
+I'm fine, what's new?</d>
+
+Nothing much...</d>
+
