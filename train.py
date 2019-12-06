@@ -232,8 +232,8 @@ if __name__ == '__main__':
                            fout.write("- got: " + got + "\n\n")
                            fout.flush()
                            # bleu score
-                           ref = target.split()
-                           hypothesis = got.split()
+                           ref = got.split()
+                           hypothesis = target.split()
                            score = nltk.translate.bleu_score.sentence_bleu([hypothesis],ref,(0.25, 0.25, 0.25, 0.25),nltk.translate.bleu_score.SmoothingFunction().method1)
                            bleu.append(score)
                     fout.write("train loss = %.5lf\teval loss = %.5lf\tBleu Score = %.5lf\n" %(np.mean(loss),np.mean(eval_loss),100*np.mean(bleu)))
